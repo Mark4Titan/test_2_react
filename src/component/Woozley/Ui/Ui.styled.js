@@ -5,6 +5,7 @@ export const Divgroup = styled.div`
   position: absolute;
   margin: 5px;
   ${(props) => props.TopLeft}px;
+  width: 100px;
 `;
 export const DivPico = styled.div`
   // position: absolute;
