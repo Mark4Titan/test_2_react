@@ -1,23 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import { Header } from "./App.styled";
+import BG from "./component/bg/bg";
+import Ui from "./component/Woozley/Ui/Ui";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header grid_template="1fr / 1fr 1fr 1fr">
+        <BG />
+        <Ui />
+      </Header>
     </div>
   );
 }
