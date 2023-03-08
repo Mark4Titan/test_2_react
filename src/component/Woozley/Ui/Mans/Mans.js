@@ -6,8 +6,7 @@ import Devices from "./Devices/Devices";
 function Buttons() {
   const [hoveredGroup, setHoveredGroup] = useState(null);
   const [clickGroups, setClickGroups] = useState(Array(5).fill(false));
-  const [clickedButtonIndex, setClickedButtonIndex] = useState(null);
-  const [clickedGroupIndex, setClickedGroupIndex] = useState(null);
+  const [activeGroup, setActiveGroup] = useState(null);
 
   const handleMouseEnter = (groupIndex, buttonIndex) => {
     setHoveredGroup({ groupIndex, buttonIndex });
@@ -18,14 +17,12 @@ function Buttons() {
   };
 
   const handleClick = (groupIndex, buttonIndex) => {
+    setActiveGroup({ groupIndex, buttonIndex });
     setClickGroups((prevClickGroups) => {
       const newClickGroups = [...prevClickGroups];
       newClickGroups[groupIndex] = !newClickGroups[groupIndex];
       return newClickGroups;
     });
-
-    setClickedButtonIndex(buttonIndex);
-    setClickedGroupIndex(groupIndex);
   };
 
   const groupStyles = [
@@ -71,9 +68,15 @@ function Buttons() {
 
       return (
         <Divgroup key={groupIndex} TopLeft={groupStyles[groupIndex]}>
-          {clickGroups[groupIndex] && clickedGroupIndex === groupIndex ? (
+          {clickGroups[groupIndex] ? (
             <Devices
-              devices={{ groupIndex, buttonIndex: clickedButtonIndex }}
+              devices={activeGroup}
+              groupIndex={groupIndex}
+              buttonIndex={
+                activeGroup?.groupIndex === groupIndex
+                  ? activeGroup.buttonIndex
+                  : null
+              }
             />
           ) : (
             buttons
