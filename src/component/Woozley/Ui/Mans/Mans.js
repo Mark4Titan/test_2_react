@@ -3,13 +3,31 @@ import { Pico } from "../Import.Img";
 import { Divgroup, DivPico, ImgPico } from "../Ui.styled";
 import Devices from "./Devices/Devices";
 
+const groupStyles = [
+  { top: 350, left: 287 },
+  { top: 555, left: 400 },
+  { top: 338, left: 646 },
+  { top: 423, left: 919 },
+  { top: 608, left: 1018 },
+];
+
+const itemStyles = [
+  { margin_top: 38, height: 35 },
+  { margin_top: 25, height: 47 },
+  { margin_top: 0, height: 70 },
+];
+
 function Buttons() {
   const [hoveredGroup, setHoveredGroup] = useState(null);
   const [clickGroups, setClickGroups] = useState(Array(5).fill(false));
   const [activeGroup, setActiveGroup] = useState(null);
 
   const handleMouseEnter = (groupIndex, buttonIndex) => {
-    setHoveredGroup({ groupIndex, buttonIndex });
+    if (!activeGroup) {
+      setHoveredGroup({ groupIndex, buttonIndex });
+    } else if (activeGroup.groupIndex === groupIndex) {
+      setHoveredGroup({ groupIndex, buttonIndex });
+    }
   };
 
   const handleMouseLeave = () => {
@@ -25,29 +43,16 @@ function Buttons() {
     });
   };
 
-  const groupStyles = [
-    { top: 350, left: 287 },
-    { top: 555, left: 400 },
-    { top: 338, left: 646 },
-    { top: 423, left: 919 },
-    { top: 608, left: 1018 },
-  ];
-
-  const itemStyles = [
-    { margin_top: 38, height: 35 },
-    { margin_top: 25, height: 47 },
-    { margin_top: 0, height: 70 },
-  ];
-
-  const groups = Array(5)
+  const Groups = Array(5)
     .fill()
     .map((_, groupIndex) => {
-      const buttons = Array(3)
+      const Buttons = Array(3)
         .fill()
         .map((_, buttonIndex) => {
           const isHovered =
             hoveredGroup?.groupIndex === groupIndex &&
-            hoveredGroup.buttonIndex >= buttonIndex;
+            hoveredGroup.buttonIndex >= buttonIndex &&
+            (!activeGroup || activeGroup.groupIndex === groupIndex);
 
           return (
             <DivPico
@@ -67,10 +72,13 @@ function Buttons() {
         });
 
       return (
-        <Divgroup key={groupIndex} TopLeft={groupStyles[groupIndex]}>
+        <Divgroup
+          id={groupIndex}
+          key={groupIndex}
+          TopLeft={groupStyles[groupIndex]}
+        >
           {clickGroups[groupIndex] ? (
             <Devices
-              devices={activeGroup}
               groupIndex={groupIndex}
               buttonIndex={
                 activeGroup?.groupIndex === groupIndex
@@ -79,13 +87,14 @@ function Buttons() {
               }
             />
           ) : (
-            buttons
+            Buttons
           )}
         </Divgroup>
       );
     });
 
-  return <div>{groups}</div>;
+  return <div>{Groups}</div>;
 }
 
 export default Buttons;
+
