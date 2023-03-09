@@ -26,7 +26,7 @@ const positionStyles = [
     { top: 23, left: 98 },
   ],
   [
-    { top: 39, left: 45 },
+    { top: 39, left: 90 },
     { top: 38, left: 45 },
     { top: 28, left: 133 },
   ],

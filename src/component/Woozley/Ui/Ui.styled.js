@@ -19,23 +19,22 @@ export const ImgPico = styled.img`
   height: 100%;
 `;
 export const DivReset = styled.div`
-  position: absolute;
-  top: 47px;
-  background-color: burlywood;
-  width: 100px;
-  color: red;
-  height: 44px;
-  display: grid;
-  justify-items: center;
-  font-size: 20px;
-  margin-left: 52px;
-  align-items: center;
-  border: solid 1px;
+  font-size: 24px;
   cursor: pointer;
-  role="button";
-  tabindex="0";
-   &:hover {
+  color: blue;
+  &:hover {
     font-size: 25px;
+    color: red;
   }
-
+`;
+export const DivRegion = styled.div`
+  position: absolute;
+  display: grid;
+  align-items: center;
+  grid-gap: 9px;
+  grid-template-columns: 1fr 60px 60px;
+  top: 120px;
+  height: 44px;
+  font-size: 24px;
+  margin-left: 76px;
 `;

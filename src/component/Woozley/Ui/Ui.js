@@ -9,7 +9,7 @@ import {
   setGroupDefault,
 } from "../../../redux/services/GroupSlice";
 import Mans from "./Mans/Mans";
-import { DivReset } from "./Ui.styled";
+import { DivRegion, DivReset } from "./Ui.styled";
 
 // const ManVu = {};
 
@@ -18,9 +18,7 @@ const Ui = () => {
   const { group_0, group_1, group_2, group_3, group_4 } = useSelector(getGroup);
 
   const Tog = () => {
-    return group_0 + group_1 + group_2 + group_3 + group_4 > -5
-      ? true
-      : false;
+    return group_0 + group_1 + group_2 + group_3 + group_4 > -5 ? true : false;
   };
 
   const DefaultGroup = () => {
@@ -29,8 +27,16 @@ const Ui = () => {
 
   return (
     <>
-      {/* <Man />; */}
-      {Tog() && <DivReset onClick={DefaultGroup}>Reset</DivReset>}
+      <DivRegion>
+        Wher are your users? Choose the number for every region.
+        {Tog() && (
+          <>
+            <DivReset onClick={DefaultGroup}>Next</DivReset>
+            <DivReset onClick={DefaultGroup}>Reset</DivReset>
+          </>
+        )}
+      </DivRegion>
+
       <Mans setGroup={setGroupActions_0} Group={group_0} data={0} />
       <Mans setGroup={setGroupActions_1} Group={group_1} data={1} />
       <Mans setGroup={setGroupActions_2} Group={group_2} data={2} />
