@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Pico } from "../Import.Img";
 import { Divgroup, DivPico, ImgPico } from "../Ui.styled";
 import Devices from "./Devices/Devices";
 
 const groupStyles = [
-  { top: 350, left: 287 },
-  { top: 555, left: 400 },
-  { top: 338, left: 646 },
-  { top: 423, left: 919 },
-  { top: 608, left: 1018 },
+  { top: 365, left: 239 },
+  { top: 568, left: 355 },
+  { top: 346, left: 596 },
+  { top: 427, left: 863 },
+  { top: 608, left: 964 },
 ];
 
 const itemStyles = [
@@ -17,42 +18,33 @@ const itemStyles = [
   { margin_top: 0, height: 70 },
 ];
 
-function Buttons() {
+function Mans({ setGroup, Group, data }) {
   const [hoveredGroup, setHoveredGroup] = useState(null);
-  const [clickGroups, setClickGroups] = useState(Array(5).fill(false));
-  const [activeGroup, setActiveGroup] = useState(null);
+
+  const dispatch = useDispatch();
 
   const handleMouseEnter = (groupIndex, buttonIndex) => {
-    if (!activeGroup) {
-      setHoveredGroup({ groupIndex, buttonIndex });
-    } else if (activeGroup.groupIndex === groupIndex) {
-      setHoveredGroup({ groupIndex, buttonIndex });
-    }
+    setHoveredGroup({ groupIndex, buttonIndex });
   };
 
   const handleMouseLeave = () => {
     setHoveredGroup(null);
   };
 
-  const handleClick = (groupIndex, buttonIndex) => {
-    setActiveGroup({ groupIndex, buttonIndex });
-    setClickGroups((prevClickGroups) => {
-      const newClickGroups = [...prevClickGroups];
-      newClickGroups[groupIndex] = !newClickGroups[groupIndex];
-      return newClickGroups;
-    });
+  const handleClick = (buttonIndex) => {
+    dispatch(setGroup(buttonIndex));
+    setHoveredGroup(null);
   };
 
-  const Groups = Array(5)
+  const groups = Array(1)
     .fill()
     .map((_, groupIndex) => {
-      const Buttons = Array(3)
+      const buttons = Array(3)
         .fill()
         .map((_, buttonIndex) => {
           const isHovered =
             hoveredGroup?.groupIndex === groupIndex &&
-            hoveredGroup.buttonIndex >= buttonIndex &&
-            (!activeGroup || activeGroup.groupIndex === groupIndex);
+            hoveredGroup.buttonIndex >= buttonIndex;
 
           return (
             <DivPico
@@ -60,7 +52,7 @@ function Buttons() {
               key={buttonIndex}
               onMouseEnter={() => handleMouseEnter(groupIndex, buttonIndex)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => handleClick(groupIndex, buttonIndex)}
+              onClick={() => handleClick(buttonIndex)}
             >
               {isHovered ? (
                 <ImgPico src={Pico.man_filled} alt="man filled" />
@@ -72,29 +64,13 @@ function Buttons() {
         });
 
       return (
-        <Divgroup
-          id={groupIndex}
-          key={groupIndex}
-          TopLeft={groupStyles[groupIndex]}
-        >
-          {clickGroups[groupIndex] ? (
-            <Devices
-              groupIndex={groupIndex}
-              buttonIndex={
-                activeGroup?.groupIndex === groupIndex
-                  ? activeGroup.buttonIndex
-                  : null
-              }
-            />
-          ) : (
-            Buttons
-          )}
+        <Divgroup key={data} TopLeft={groupStyles[data]}>
+          {Group > -1 ? <Devices devices={Group} Data={data} /> : buttons}
         </Divgroup>
       );
     });
 
-  return <div>{Groups}</div>;
+  return <div>{groups}</div>;
 }
 
-export default Buttons;
-
+export default Mans;
