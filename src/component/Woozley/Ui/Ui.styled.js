@@ -18,7 +18,7 @@ export const ImgPico = styled.img`
   width: 100%;
   height: 100%;
 `;
-export const DivReset = styled.div`
+export const DivButton = styled.div`
   font-size: 24px;
   cursor: pointer;
   color: blue;
