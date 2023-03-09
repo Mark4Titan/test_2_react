@@ -1,13 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Pico } from "../Import.Img";
 import { Divgroup, DivPico, ImgPico } from "../Ui.styled";
 import Devices from "./Devices/Devices";
 
-function Buttons() {
+const groupStyles = [
+  { top: 365, left: 239 },
+  { top: 568, left: 355 },
+  { top: 346, left: 596 },
+  { top: 427, left: 863 },
+  { top: 608, left: 964 },
+];
+
+const itemStyles = [
+  { margin_top: 38, height: 35 },
+  { margin_top: 25, height: 47 },
+  { margin_top: 0, height: 70 },
+];
+
+function Mans({ setGroup, Group, data }) {
   const [hoveredGroup, setHoveredGroup] = useState(null);
-  const [clickGroups, setClickGroups] = useState(Array(5).fill(false));
-  const [clickedButtonIndex, setClickedButtonIndex] = useState(null);
-  const [clickedGroupIndex, setClickedGroupIndex] = useState(null);
+
+  const dispatch = useDispatch();
 
   const handleMouseEnter = (groupIndex, buttonIndex) => {
     setHoveredGroup({ groupIndex, buttonIndex });
@@ -17,32 +31,12 @@ function Buttons() {
     setHoveredGroup(null);
   };
 
-  const handleClick = (groupIndex, buttonIndex) => {
-    setClickGroups((prevClickGroups) => {
-      const newClickGroups = [...prevClickGroups];
-      newClickGroups[groupIndex] = !newClickGroups[groupIndex];
-      return newClickGroups;
-    });
-
-    setClickedButtonIndex(buttonIndex);
-    setClickedGroupIndex(groupIndex);
+  const handleClick = (buttonIndex) => {
+    dispatch(setGroup(buttonIndex));
+    setHoveredGroup(null);
   };
 
-  const groupStyles = [
-    { top: 350, left: 287 },
-    { top: 555, left: 400 },
-    { top: 338, left: 646 },
-    { top: 423, left: 919 },
-    { top: 608, left: 1018 },
-  ];
-
-  const itemStyles = [
-    { margin_top: 38, height: 35 },
-    { margin_top: 25, height: 47 },
-    { margin_top: 0, height: 70 },
-  ];
-
-  const groups = Array(5)
+  const groups = Array(1)
     .fill()
     .map((_, groupIndex) => {
       const buttons = Array(3)
@@ -58,7 +52,7 @@ function Buttons() {
               key={buttonIndex}
               onMouseEnter={() => handleMouseEnter(groupIndex, buttonIndex)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => handleClick(groupIndex, buttonIndex)}
+              onClick={() => handleClick(buttonIndex)}
             >
               {isHovered ? (
                 <ImgPico src={Pico.man_filled} alt="man filled" />
@@ -70,14 +64,8 @@ function Buttons() {
         });
 
       return (
-        <Divgroup key={groupIndex} TopLeft={groupStyles[groupIndex]}>
-          {clickGroups[groupIndex] && clickedGroupIndex === groupIndex ? (
-            <Devices
-              devices={{ groupIndex, buttonIndex: clickedButtonIndex }}
-            />
-          ) : (
-            buttons
-          )}
+        <Divgroup key={data} TopLeft={groupStyles[data]}>
+          {Group > -1 ? <Devices devices={Group} Data={data} /> : buttons}
         </Divgroup>
       );
     });
@@ -85,4 +73,4 @@ function Buttons() {
   return <div>{groups}</div>;
 }
 
-export default Buttons;
+export default Mans;
