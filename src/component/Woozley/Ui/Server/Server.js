@@ -6,12 +6,12 @@ import { DivServer } from "./Server.styled";
 const itemStyles = [{ height: 44 }, { height: 60 }];
 const groupStyles = [
   { top: 398, left: 210 },
-  { top: 375, left: 410 },
+  { top: 375, left: 395 },
   { top: 374, left: 632 },
   { top: 560, left: 961 },
 ];
 
-const Server = ({ server, setServer, data }) => {
+const Server = ({ server, setServer, data, startV, central }) => {
   const [hoveredServer, setHoveredServer] = useState(false);
 
   const handleMouseLeave = () => {
@@ -26,9 +26,17 @@ const Server = ({ server, setServer, data }) => {
     setServer(indexServer);
   };
 
+  const serverRender = (data) => {
+    return central === data ? (
+      <ImgPico src={Pico.server} alt="server" />
+    ) : (
+      <ImgPico src={Pico.server_ByteCloud} alt="server ByteCloud" />
+    );
+  };
+
   return (
     <>
-      {
+      {(!startV || server > 0) && (
         <DivServer
           key={data}
           TopLeft={groupStyles[data]}
@@ -46,15 +54,10 @@ const Server = ({ server, setServer, data }) => {
               )}
             </>
           ) : (
-            <>
-              {data === 2 && <ImgPico src={Pico.server} alt="server" />}
-              {data !== 2 && (
-                <ImgPico src={Pico.server_ByteCloud} alt="server" />
-              )}
-            </>
+            serverRender(data)
           )}
         </DivServer>
-      }
+      )}
     </>
   );
 };

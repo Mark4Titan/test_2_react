@@ -4,11 +4,11 @@ import { Divgroup, DivPico, ImgPico } from "../Ui.styled";
 import Devices from "./Devices/Devices";
 
 const groupStyles = [
-  { top: 365, left: 239 },
-  { top: 568, left: 355 },
-  { top: 346, left: 596 },
-  { top: 427, left: 863 },
-  { top: 608, left: 964 },
+  { top: 365, left: 209 },
+  { top: 568, left: 339 },
+  { top: 346, left: 586 },
+  { top: 427, left: 853 },
+  { top: 608, left: 950 },
 ];
 
 const itemStyles = [
@@ -62,11 +62,7 @@ function Mans({ setGroup, Group, data }) {
 
       return (
         <Divgroup key={data} TopLeft={groupStyles[data]}>
-          {Group > -1 ? (
-            <Devices devices={Group} Data={data} />
-          ) : (
-            buttons
-          )}
+          {Group > -1 ? <Devices devices={Group} Data={data} /> : buttons}
         </Divgroup>
       );
     });

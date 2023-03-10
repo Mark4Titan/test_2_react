@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   group: [-1, -1, -1, -1, -1],
   server: [0, 0, 0, 0],
+  central: -1,
 };
 
 export const GroupSlice = createSlice({
@@ -20,6 +21,10 @@ export const GroupSlice = createSlice({
     },
     setServerDefault: (state) => {
       state.server = [0, 0, 0, 0];
+      state.central = -1;
+    },
+    setCentralActions: (state, action) => {
+      state.central = action.payload;
     },
   },
 });
@@ -29,9 +34,11 @@ export const {
   setGroupDefault,
   setServerActions,
   setServerDefault,
+  setCentralActions,
 } = GroupSlice.actions;
 
 export const GroupReducer = GroupSlice.reducer;
 
 export const getGroup = (state) => state.Group;
 export const getServer = (state) => state.Group;
+export const getCentral = (state) => state.Group;
