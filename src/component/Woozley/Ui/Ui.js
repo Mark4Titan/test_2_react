@@ -2,105 +2,136 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGroup,
-  setGroupActions_0,
-  setGroupActions_1,
-  setGroupActions_2,
-  setGroupActions_3,
-  setGroupActions_4,
+  getServer,
+  getCentral,
+  setGroupActions,
   setGroupDefault,
+  setServerActions,
+  setServerDefault,
+  setCentralActions,
 } from "../../../redux/services/GroupSlice";
+import CommLines from "./CommLines/CommLines";
+import { Pico } from "./Import.Img";
 import Mans from "./Mans/Mans";
 import Server from "./Server/Server";
-import { DivRegion, DivButton } from "./Ui.styled";
-
-// const ManVu = {};
+import { DivRegion, DivButton, ImgPico } from "./Ui.styled";
 
 const Ui = () => {
   const [nextV, setNextV] = useState(false);
+  const [startV, setStartV] = useState(false);
   const dispatch = useDispatch();
-  const { group_0, group_1, group_2, group_3, group_4 } = useSelector(getGroup);
+  const { group } = useSelector(getGroup);
+  const { server } = useSelector(getServer);
+  const { central } = useSelector(getCentral);
 
-  const Summ = () => {
-    return group_0 + group_1 + group_2 + group_3 + group_4;
+  const SummGr = () => {
+    return group.reduce((total, value) => total + value, 0);
+  };
+  const SummSer = () => {
+    return server.reduce((total, value) => total + value, 0);
   };
 
   useEffect(() => {
-    const Bul =
-      group_0 > -1 &&
-      group_1 > -1 &&
-      group_2 > -1 &&
-      group_3 > -1 &&
-      group_4 > -1 &&
-      true;
+    const Bul = server.every((value) => value > 0);
+    Bul && setStartV(true);
+  }, [server]);
+
+  useEffect(() => {
+    const Bul = group.every((value) => value > -1);
     Bul && setNextV(true);
-  }, [group_0, group_1, group_2, group_3, group_4]);
+  }, [group]);
 
   const ButtonNext = () => {
     setNextV(true);
-    console.log(group_0 > -1 && nextV);
+  };
+  const ButtonStart = () => {
+    setStartV(true);
   };
 
   const DefaultGroup = () => {
-    dispatch(setGroupDefault());
+    SummSer() > 0 ? dispatch(setServerDefault()) : dispatch(setGroupDefault());
     setNextV(false);
+    setStartV(false);
+  };
+  const setGroup = (valueGroup, buttIndex) => {
+    const nevGroup = [...group];
+    nevGroup[valueGroup] = buttIndex;
+    dispatch(setGroupActions(nevGroup));
+  };
+  const setServer = (valueServer) => {
+    const nevServer = [...server];
+    nevServer[valueServer] = 1;
+    dispatch(setServerActions(nevServer));
+    if (central > -1) return;
+    dispatch(setCentralActions(valueServer));
+  };
+
+  const renderMans = (data) => {
+    const mansGroup = group[data];
+    if (!nextV || mansGroup > -1) {
+      return (
+        <Mans key={data} setGroup={setGroup} Group={mansGroup} data={data} />
+      );
+    }
+    return null;
+  };
+
+  
+
+  const RenderManagement = () => {
+    if (!nextV) {
+      return (
+        <>
+          Wher are your users? Choose the number for every region.
+          {SummGr() > -5 && (
+            <>
+              <DivButton onClick={DefaultGroup}>Prev.</DivButton>
+              or
+              <DivButton onClick={ButtonNext}>Next</DivButton>
+            </>
+          )}
+        </>
+      );
+    }
+    if (nextV) {
+      return (
+        <>
+          Choose minimum two additional spots for ByteCloud and press
+          {SummGr() > -5 && (
+            <>
+              <DivButton onClick={DefaultGroup}>Prev.</DivButton>
+              or
+              <DivButton tog={SummSer() <= 1 ? 1 : 0} onClick={ButtonStart}>
+                Start
+              </DivButton>
+            </>
+          )}
+        </>
+      );
+    }
   };
 
   return (
     <>
-      <DivRegion>
-        Wher are your users? Choose the number for every region.
-        {Summ() > -5 && (
-          <>
-            <DivButton onClick={ButtonNext}>Next</DivButton>
-            <DivButton onClick={DefaultGroup}>Reset</DivButton>
-          </>
-        )}
-      </DivRegion>
-      {!nextV ? (
-        <Mans setGroup={setGroupActions_0} Group={group_0} data={0} />
-      ) : (
-        group_0 > -1 && (
-          <Mans setGroup={setGroupActions_0} Group={group_0} data={0} />
-        )
-      )}
+      <DivRegion>{RenderManagement()}</DivRegion>
+      {group.map((_, indexGr) => renderMans(indexGr))}
 
-      {!nextV ? (
-        <Mans setGroup={setGroupActions_1} Group={group_1} data={1} />
-      ) : (
-        group_1 > -1 && (
-          <Mans setGroup={setGroupActions_1} Group={group_1} data={1} />
-        )
-      )}
-      
-      {!nextV ? (
-        <Mans setGroup={setGroupActions_2} Group={group_2} data={2} />
-      ) : (
-        group_2 > -1 && (
-          <Mans setGroup={setGroupActions_2} Group={group_2} data={2} />
-        )
-      )}
-      
-      {!nextV ? (
-        <Mans setGroup={setGroupActions_3} Group={group_3} data={3} />
-      ) : (
-        group_3 > -1 && (
-          <Mans setGroup={setGroupActions_3} Group={group_3} data={3} />
-        )
-      )}
+      {nextV &&
+        server.map((_, indexSer) => (
+          <Server
+            key={indexSer}
+            server={server[indexSer]}
+            setServer={setServer}
+            data={indexSer}
+            startV={startV}
+            Central={central}
+            central={central}
+          />
+        ))}
 
-      {!nextV ? (
-        <Mans setGroup={setGroupActions_4} Group={group_4} data={4} />
-      ) : (
-        group_4 > -1 && (
-          <Mans setGroup={setGroupActions_4} Group={group_4} data={4} />
-        )
+      {startV && (
+        <CommLines server={server} devices={group} SummServer={SummSer} />
       )}
-
-      
-      
-      
-
-      {nextV && <Server />}
     </>
   );
 };

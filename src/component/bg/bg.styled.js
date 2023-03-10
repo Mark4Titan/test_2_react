@@ -7,6 +7,7 @@ export const ImgBg = styled.img`
 `;
 
 export const DivBg = styled.div`
+  z-index: 1;
   position: absolute;
   margin-left: 50px;
   margin-top: ${(props) => props.margin_top}px;

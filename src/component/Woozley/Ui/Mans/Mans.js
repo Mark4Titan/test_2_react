@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Pico } from "../Import.Img";
 import { Divgroup, DivPico, ImgPico } from "../Ui.styled";
 import Devices from "./Devices/Devices";
 
 const groupStyles = [
-  { top: 365, left: 239 },
-  { top: 568, left: 355 },
-  { top: 346, left: 596 },
-  { top: 427, left: 863 },
-  { top: 608, left: 964 },
+  { top: 365, left: 209 },
+  { top: 568, left: 339 },
+  { top: 346, left: 586 },
+  { top: 427, left: 853 },
+  { top: 608, left: 950 },
 ];
 
 const itemStyles = [
@@ -21,8 +20,6 @@ const itemStyles = [
 function Mans({ setGroup, Group, data }) {
   const [hoveredGroup, setHoveredGroup] = useState(null);
 
-  const dispatch = useDispatch();
-
   const handleMouseEnter = (groupIndex, buttonIndex) => {
     setHoveredGroup({ groupIndex, buttonIndex });
   };
@@ -32,7 +29,7 @@ function Mans({ setGroup, Group, data }) {
   };
 
   const handleClick = (buttonIndex) => {
-    dispatch(setGroup(buttonIndex));
+    setGroup(data, buttonIndex);
     setHoveredGroup(null);
   };
 
@@ -69,7 +66,6 @@ function Mans({ setGroup, Group, data }) {
         </Divgroup>
       );
     });
-
   return <div>{groups}</div>;
 }
 
