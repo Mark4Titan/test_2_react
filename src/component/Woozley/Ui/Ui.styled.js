@@ -37,14 +37,35 @@ export const DivButton = styled.div`
   }
 `;
 export const DivRegion = styled.div`
-  z-index: 7;
+  z-index: 11;
   position: absolute;
   display: grid;
   align-items: center;
   grid-gap: 9px;
-  grid-template-columns: 1fr 60px 30px 60px;
+  grid-template-columns: 1fr auto 30px 60px;
   top: 120px;
   height: 44px;
   font-size: 24px;
   margin-left: 76px;
+`;
+
+export const DivModal = styled.div`
+  position: fixed;
+  z-index: 10;
+  width: 1245px;
+  height: 725px;
+  top: 98px;
+  left: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+
+  
+  background: rgba(255, 255, 255, 0.17);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.3px);
+  -webkit-backdrop-filter: blur(5.3px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 `;

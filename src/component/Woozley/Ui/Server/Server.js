@@ -11,7 +11,7 @@ const groupStyles = [
   { top: 560, left: 961 },
 ];
 
-const Server = ({ server, setServer, data, startV, central }) => {
+const Server = ({ server, setServer, data, central, stages }) => {
   const [hoveredServer, setHoveredServer] = useState(false);
 
   const handleMouseLeave = () => {
@@ -36,7 +36,7 @@ const Server = ({ server, setServer, data, startV, central }) => {
 
   return (
     <>
-      {(!startV || server > 0) && (
+      {(stages < 2 || server > 0) && (
         <DivServer
           key={data}
           TopLeft={groupStyles[data]}
