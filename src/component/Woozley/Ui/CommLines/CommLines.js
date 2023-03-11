@@ -2,62 +2,53 @@ import { LinksGermany } from "../import.img.linksGermany";
 import { LinksSingapore } from "../import.img.linksSingapore";
 import { LinksUsa } from "../import.img.linksUsa";
 import { LinksWest_usa } from "../import.img.linksWest_usa";
-import { ServersClosestFriends } from "../Import.ServersClosestFriends";
+import {
+  ServeUse,
+  ServeWestUsa,
+  ServeGermany,
+  ServeSingapore,
+} from "../Import.ServersClosestFriends";
 import { ImgPico } from "../Ui.styled";
-import { DivComm, DivGermany, DivLines } from "./CommLines.stiled";
-import React, { useEffect, useState } from "react";
+import { DivComm, DivBoxImg, DivLines, DivModal } from "./CommLines.stiled";
+import React, { useEffect } from "react";
 
+const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
 
-const CommLines = ({ server, devices, SummServer }) => {
-  const [element, setElement] = useState(false)
-
-
-  
-
-  const  MyComponent = (val)=> {
+  const Manager = () => {
     useEffect(() => {
-      setElement("start");
+      stagesApdata(3);
 
       setTimeout(() => {
-        setElement("end");
-      }, 3000);
+        stagesApdata(4);
+      }, 4000);
 
       setTimeout(() => {
-        setElement("Finish");
-      }, 5000);
-    }, [val]);
+        stagesApdata(5);
+      }, 8000);
 
-    // return <div>{/* рендерінг компоненту */}</div>;
-  }
+      setTimeout(() => {
+        stagesApdata(6);
+      }, 10000);
+    }, []);
+  };
 
-  MyComponent(true);
-  console.log(element);
-
-
-
-const RenderPriv = () => {
-  return ServersClosestFriends.map((i, index) => {
-    const deviceIndex = Math.floor(index / 3);
-    const threshold = index % 3;
-
-    if (devices[deviceIndex] >= threshold) {
+  const RenderPriv = (Line, dev, dev2 = -1) => {
+    return Line.map((i, index) => {
+      const devCounts = [dev, dev2];
+      const devIndex = Math.floor(index / 3);
+      const devCount = devCounts[devIndex];
+      const imgIndex = index % 3;
+      const shouldRenderImg = devCount >= imgIndex;
       return (
         <DivComm key={i}>
-          <ImgPico src={i} alt={`link_${index}`} />
+          {shouldRenderImg ? <ImgPico src={i} alt={`link_${index}`} /> : null}
         </DivComm>
       );
-    }
+    });
+  };
 
-    return null;
-  });
-};
-
-
-
-  const Render = (Line) => {    
-
-    if (SummServer() > 3) return RenderPriv(Line);
-    return (Line.map((i, index) => (
+  const Render = (Line) => {
+    return Line.map((i, index) => (
       <DivComm key={`${i}_${index}`}>
         {((index % 3 === 0 && devices[Math.floor(index / 3)] >= 0) ||
           (index % 3 === 1 && devices[Math.floor(index / 3)] >= 1) ||
@@ -65,23 +56,43 @@ const RenderPriv = () => {
           <ImgPico src={i} alt={`link_${index}`} />
         )}
       </DivComm>
-    )))
+    ));
+  };
+
+  const renderLine = (num, index) => {
+    if (num > 0) {
+      return (
+        <DivBoxImg key={`Line_${index}`}>
+          {index === 0 && RenderPriv(ServeWestUsa, devices[1])}
+          {index === 1 && RenderPriv(ServeUse, devices[0])}
+          {index === 2 && RenderPriv(ServeGermany, devices[2])}
+          {index === 3 && RenderPriv(ServeSingapore, devices[3], devices[4])}
+        </DivBoxImg>
+      );
+    }
+    return null;
+  };
+
+  const renderCentralServer = (s, i) => {
+    if (s > 0 && central === i) {
+      return (
+        <DivBoxImg key={`Line_${i}`}>
+          {Render([LinksWest_usa, LinksUsa, LinksGermany, LinksSingapore][i])}
+        </DivBoxImg>
+      );
+    }
+    return null;
   };
 
   return (
     <DivLines>
-      {server[0] > 0 && (
-        <DivGermany key="Line_)">{Render(LinksWest_usa)}</DivGermany>
+      {Manager()}
+      {stages === 3 && (
+        <DivBoxImg key="Line_01">{server.map(renderLine)}</DivBoxImg>
       )}
-      {server[1] > 0 && (
-        <DivGermany key="Line_1">{Render(LinksUsa)}</DivGermany>
-      )}
-      {server[2] > 0 && (
-        <DivGermany key="Line_2">{Render(LinksGermany)}</DivGermany>
-      )}
-      {server[3] > 0 && (
-        <DivGermany key="Line_3">{Render(LinksSingapore)}</DivGermany>
-      )}
+      {(stages >= 4 ) && (
+        <DivBoxImg key="Line_02)">{server.map(renderCentralServer)}</DivBoxImg>
+      )}      
     </DivLines>
   );
 };

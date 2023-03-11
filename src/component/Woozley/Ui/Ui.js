@@ -4,25 +4,33 @@ import {
   getGroup,
   getServer,
   getCentral,
+  getStages,
   setGroupActions,
-  setGroupDefault,
   setServerActions,
   setServerDefault,
   setCentralActions,
+  setAllDefaultActions,
+  setStagesActions,
 } from "../../../redux/services/GroupSlice";
 import CommLines from "./CommLines/CommLines";
-import { Pico } from "./Import.Img";
 import Mans from "./Mans/Mans";
 import Server from "./Server/Server";
-import { DivRegion, DivButton, ImgPico } from "./Ui.styled";
+import { DivRegion, DivButton, DivModal } from "./Ui.styled";
 
 const Ui = () => {
-  const [nextV, setNextV] = useState(false);
-  const [startV, setStartV] = useState(false);
   const dispatch = useDispatch();
   const { group } = useSelector(getGroup);
   const { server } = useSelector(getServer);
   const { central } = useSelector(getCentral);
+  const { stages } = useSelector(getStages);
+
+  useEffect(() => {
+    dispatch(setAllDefaultActions());
+  }, [dispatch]);
+
+  const stagesApdata = (data) => {
+    dispatch(setStagesActions(data));
+  };
 
   const SummGr = () => {
     return group.reduce((total, value) => total + value, 0);
@@ -33,25 +41,27 @@ const Ui = () => {
 
   useEffect(() => {
     const Bul = server.every((value) => value > 0);
-    Bul && setStartV(true);
-  }, [server]);
+    Bul && dispatch(setStagesActions(2));
+  }, [dispatch, server]);
 
   useEffect(() => {
     const Bul = group.every((value) => value > -1);
-    Bul && setNextV(true);
-  }, [group]);
+    Bul && dispatch(setStagesActions(1));
+  }, [dispatch, group]);
 
   const ButtonNext = () => {
-    setNextV(true);
+    dispatch(setStagesActions(1));
   };
   const ButtonStart = () => {
-    setStartV(true);
+    dispatch(setStagesActions(2));
   };
 
   const DefaultGroup = () => {
-    SummSer() > 0 ? dispatch(setServerDefault()) : dispatch(setGroupDefault());
-    setNextV(false);
-    setStartV(false);
+    if (SummSer() > 0) {
+      dispatch(setServerDefault());
+    } else {
+      dispatch(setAllDefaultActions());
+    }
   };
   const setGroup = (valueGroup, buttIndex) => {
     const nevGroup = [...group];
@@ -68,7 +78,7 @@ const Ui = () => {
 
   const renderMans = (data) => {
     const mansGroup = group[data];
-    if (!nextV || mansGroup > -1) {
+    if (stages === 0 || mansGroup > -1) {
       return (
         <Mans key={data} setGroup={setGroup} Group={mansGroup} data={data} />
       );
@@ -76,10 +86,12 @@ const Ui = () => {
     return null;
   };
 
-  
+  const Again = () => {
+    dispatch(setAllDefaultActions());
+  };
 
   const RenderManagement = () => {
-    if (!nextV) {
+    if (stages === 0) {
       return (
         <>
           Wher are your users? Choose the number for every region.
@@ -93,19 +105,40 @@ const Ui = () => {
         </>
       );
     }
-    if (nextV) {
+    if (stages > 0 && stages < 2) {
       return (
         <>
-          Choose minimum two additional spots for ByteCloud and press
-          {SummGr() > -5 && (
+          {central === -1 ? (
             <>
-              <DivButton onClick={DefaultGroup}>Prev.</DivButton>
-              or
-              <DivButton tog={SummSer() <= 1 ? 1 : 0} onClick={ButtonStart}>
-                Start
-              </DivButton>
+              Where is your data Choose one spot for Object Storage system
+              {SummGr() > -5 && (
+                <>
+                  <DivButton onClick={DefaultGroup}>Prev.</DivButton>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              Choose minimum two additional spots for ByteCloud and press
+              {SummGr() > -5 && (
+                <>
+                  <DivButton onClick={DefaultGroup}>Prev.</DivButton>
+                  or
+                  <DivButton tog={SummSer() <= 1 ? 1 : 0} onClick={ButtonStart}>
+                    Start
+                  </DivButton>
+                </>
+              )}
             </>
           )}
+        </>
+      );
+    }
+    if (stages === 6) {
+      return (
+        <>
+          Do you want to
+          <DivButton onClick={Again}>start again?</DivButton>
         </>
       );
     }
@@ -116,21 +149,32 @@ const Ui = () => {
       <DivRegion>{RenderManagement()}</DivRegion>
       {group.map((_, indexGr) => renderMans(indexGr))}
 
-      {nextV &&
+      {stages !== 0 &&
         server.map((_, indexSer) => (
           <Server
             key={indexSer}
             server={server[indexSer]}
             setServer={setServer}
             data={indexSer}
-            startV={startV}
-            Central={central}
+            stages={stages}
             central={central}
           />
         ))}
 
-      {startV && (
-        <CommLines server={server} devices={group} SummServer={SummSer} />
+      {stages >= 2 && (
+        <CommLines
+          server={server}
+          devices={group}
+          central={central}
+          stagesApdata={stagesApdata}
+          stages={stages}
+        />
+      )}
+      {stages === 6 && (
+        <DivModal key="text">
+          <div>done</div>
+          <div>done</div>
+        </DivModal>
       )}
     </>
   );
