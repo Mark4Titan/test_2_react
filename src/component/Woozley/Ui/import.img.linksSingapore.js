@@ -18,7 +18,15 @@ import south_america_large from "../img/links/singapore/arc_singapore_south-amer
 import south_america_medium from "../img/links/singapore/arc_singapore_south-america_medium.png";
 import south_america_small from "../img/links/singapore/arc_singapore_south-america_small.png";
 
- export const LinksSingapore = [
+export const LinksSingapore = [
+  arc_singapore_asia_small,
+  arc_singapore_asia_medium,
+  arc_singapore_asia_large,
+
+  arc_singapore_oceania_small,
+  arc_singapore_oceania_medium,
+  arc_singapore_oceania_large,
+
   north_america_small,
   north_america_medium,
   north_america_large,
@@ -30,12 +38,4 @@ import south_america_small from "../img/links/singapore/arc_singapore_south-amer
   arc_singapore_europe_small,
   arc_singapore_europe_medium,
   arc_singapore_europe_large,
-
-  arc_singapore_asia_small,
-  arc_singapore_asia_medium,
-  arc_singapore_asia_large,
-
-  arc_singapore_oceania_small,
-  arc_singapore_oceania_medium,
-  arc_singapore_oceania_large,
 ];
