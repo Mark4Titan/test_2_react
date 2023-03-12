@@ -20,14 +20,6 @@ import south_america_small from "../img/links/germany/arc_germany_south-america_
 
 
 export const LinksGermany = [
-  north_america_small,
-  north_america_medium,
-  north_america_large,
-
-  south_america_small,
-  south_america_medium,
-  south_america_large,
-
   arc_germany_europe_small,
   arc_germany_europe_medium,
   arc_germany_europe_large,
@@ -39,4 +31,13 @@ export const LinksGermany = [
   arc_germany_oceania_small,
   arc_germany_oceania_medium,
   arc_germany_oceania_large,
+  
+  north_america_small,
+  north_america_medium,
+  north_america_large,
+
+  south_america_small,
+  south_america_medium,
+  south_america_large,
+
 ];

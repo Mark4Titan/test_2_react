@@ -19,14 +19,14 @@ import south_america_medium from "../img/links/west/arc_west-usa_south-america_m
 import south_america_small from "../img/links/west/arc_west-usa_south-america_small.png";
 
 export const LinksWest_usa = [
-  north_america_small,
-  north_america_medium,
-  north_america_large,
-
   south_america_small,
   south_america_medium,
   south_america_large,
-
+  
+  north_america_small,
+  north_america_medium,
+  north_america_large,
+  
   usa_europe_small,
   usa_europe_medium,
   usa_europe_large,

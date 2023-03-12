@@ -2,17 +2,14 @@ import { LinksGermany } from "../import.img.linksGermany";
 import { LinksSingapore } from "../import.img.linksSingapore";
 import { LinksUsa } from "../import.img.linksUsa";
 import { LinksWest_usa } from "../import.img.linksWest_usa";
-import {
-  ServeUse,
-  ServeWestUsa,
-  ServeGermany,
-  ServeSingapore,
-} from "../Import.ServersClosestFriends";
 import { ImgPico } from "../Ui.styled";
 import { DivComm, DivBoxImg, DivLines } from "./CommLines.stiled";
 import React, { useEffect } from "react";
 
+const SerLink = [LinksWest_usa, LinksUsa, LinksGermany, LinksSingapore];
+
 const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
+
   const Manager = () => {
     useEffect(() => {
       stagesApdata(3);
@@ -21,13 +18,13 @@ const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
         stagesApdata(4);
       }, 4000);
 
-      setTimeout(() => {
-        stagesApdata(5);
-      }, 8000);
+      // setTimeout(() => {
+      //   stagesApdata(5);
+      // }, 8000);
 
-      setTimeout(() => {
-        stagesApdata(6);
-      }, 10000);
+      // setTimeout(() => {
+      //   stagesApdata(6);
+      // }, 10000);
     }, []);
   };
 
@@ -37,6 +34,7 @@ const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
       const devCount = dev[devIndex];
       const imgIndex = index % 3;
       const shouldRenderImg = devCount >= imgIndex;
+
       return (
         <DivComm key={i}>
           {shouldRenderImg ? <ImgPico src={i} alt={`link_${index}`} /> : null}
@@ -45,23 +43,24 @@ const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
     });
   };
 
-  const Render = (Line) => {
-    return Line.map((i, index) => (
-      <DivComm key={`${i}_${index}`}>
-        {((index % 3 === 0 && devices[Math.floor(index / 3)] >= 0) ||
-          (index % 3 === 1 && devices[Math.floor(index / 3)] >= 1) ||
-          (index % 3 === 2 && devices[Math.floor(index / 3)] === 2)) && (
-          <ImgPico src={i} alt={`link_${index}`} />
-        )}
-      </DivComm>
-    ));
+  const createResultCentral = () => {
+    let resultCentral = "";
+
+    for (let i = 0; i < 4; i++) {
+      if (i === central) {
+        resultCentral += "1";
+      } else {
+        resultCentral += "0";
+      }
+    }
+
+    return resultCentral;
   };
 
-  const renderLine = () => {
+  const renderLine = (looking = true) => {
     const res = server.map(String).reduce((a, b) => a + b);
-    const result = "SE_" + res;
+    const result = looking ? `SE_${res}` : `CSE_${createResultCentral()}`;
 
-    const SerLink = [ServeWestUsa, ServeUse, ServeGermany, ServeSingapore];
     const MAPSERVER = {
       SE_1111: [
         [SerLink[0], devices[1]],
@@ -89,8 +88,51 @@ const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
         [SerLink[1], devices[0]],
         [SerLink[2], devices[2], devices[3], devices[4]],
       ],
+
+      CSE_1000: [
+        [
+          SerLink[0],
+          devices[1],
+          devices[0],
+          devices[2],
+          devices[3],
+          devices[4],
+        ],
+      ],
+      CSE_0100: [
+        [
+          SerLink[1],
+          devices[0],
+          devices[1],
+          devices[2],
+          devices[3],
+          devices[4],
+        ],
+      ],
+      // 
+      CSE_0010: [
+        [
+          SerLink[2],
+          devices[2],
+          devices[3],
+          devices[4],
+          devices[0],
+          devices[1],
+        ],
+      ],
+      CSE_0001: [
+        [
+          SerLink[3],
+          devices[3],
+          devices[4],
+          devices[0],
+          devices[1],
+          devices[2],
+        ],
+      ],
     };
 
+    
     const elem = [];
     for (let i = 0; i < MAPSERVER[result].length; i++) {
       const firstElem = MAPSERVER[result][i][0];
@@ -98,23 +140,10 @@ const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
       elem.push(RenderPriv(firstElem, rest));
     }
 
-    return (
-      <DivBoxImg key={elem}>
-        {elem}        
-      </DivBoxImg>
-    );   
+    return <DivBoxImg key={elem}>{elem}</DivBoxImg>;
   };
 
-  const renderCentralServer = (s, i) => {
-    if (s > 0 && central === i) {
-      return (
-        <DivBoxImg key={`Line_${i}`}>
-          {Render([LinksWest_usa, LinksUsa, LinksGermany, LinksSingapore][i])}
-        </DivBoxImg>
-      );
-    }
-    return null;
-  };
+
 
   return (
     <DivLines>
@@ -125,7 +154,7 @@ const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
         </>
       )}
       {stages >= 4 && (
-        <DivBoxImg key="Line_02)">{server.map(renderCentralServer)}</DivBoxImg>
+        <DivBoxImg key="Line_02)">{renderLine(false)}</DivBoxImg>
       )}
     </DivLines>
   );
