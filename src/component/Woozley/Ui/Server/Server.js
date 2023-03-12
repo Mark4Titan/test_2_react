@@ -3,7 +3,10 @@ import { Pico } from "../Import.Img";
 import { ImgPico } from "../Ui.styled";
 import { DivServer } from "./Server.styled";
 
-const itemStyles = [{ height: 44 }, { height: 60 }];
+const itemStyles = [
+  { height: 44, width: 44 },
+  { height: 60, width: 58 },
+];
 const groupStyles = [
   { top: 398, left: 210 },
   { top: 375, left: 395 },
@@ -34,13 +37,15 @@ const Server = ({ server, setServer, data, central, stages }) => {
     );
   };
 
+  
+
   return (
     <>
       {(stages < 2 || server > 0) && (
         <DivServer
           key={data}
           TopLeft={groupStyles[data]}
-          Height={itemStyles[server]}
+          WidthHeight={itemStyles[server]}
           onClick={() => handleClick(data)}
           onMouseLeave={handleMouseLeave}
           onMouseEnter={handleMouseEnter}

@@ -10,6 +10,7 @@ export const DivBg = styled.div`
   z-index: 1;
   position: absolute;
   margin-left: 50px;
+  border-radius: 14px;
   margin-top: ${(props) => props.margin_top}px;
   padding: ${(props) => props.padding};
   width: ${(props) => props.width}px;

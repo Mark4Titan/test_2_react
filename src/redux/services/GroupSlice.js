@@ -27,7 +27,7 @@ export const GroupSlice = createSlice({
     setServerDefault: (state) => {
       state.server = [0, 0, 0, 0];
       state.central = -1;
-      state.stages = 2;
+      state.stages = 1;
     },
     setCentralActions: (state, action) => {
       state.central = action.payload;

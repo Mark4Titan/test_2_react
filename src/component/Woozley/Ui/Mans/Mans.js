@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Pico } from "../Import.Img";
-import { Divgroup, DivPico, ImgPico } from "../Ui.styled";
+import { Divgroup } from "../Ui.styled";
 import Devices from "./Devices/Devices";
+import RenderGroups from "./RenderGroups/RenderGroups";
 
 const groupStyles = [
   { top: 365, left: 209 },
@@ -11,52 +10,21 @@ const groupStyles = [
   { top: 608, left: 950 },
 ];
 
-const itemStyles = [
-  { margin_top: 38, height: 35 },
-  { margin_top: 25, height: 47 },
-  { margin_top: 0, height: 70 },
-];
-
 function Mans({ setGroup, Group, data }) {
-  const [hoveredGroup, setHoveredGroup] = useState(null);
-
-  const handleMouseEnter = (groupIndex, buttonIndex) => {
-    setHoveredGroup({ groupIndex, buttonIndex });
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredGroup(null);
-  };
-
-  const handleClick = (buttonIndex) => {
-    setGroup(data, buttonIndex);
-    setHoveredGroup(null);
-  };
-
   const groups = Array(1)
     .fill()
     .map((_, groupIndex) => {
       const buttons = Array(3)
         .fill()
         .map((_, buttonIndex) => {
-          const isHovered =
-            hoveredGroup?.groupIndex === groupIndex &&
-            hoveredGroup.buttonIndex >= buttonIndex;
-
           return (
-            <DivPico
-              TopLeft={itemStyles[buttonIndex]}
-              key={buttonIndex}
-              onMouseEnter={() => handleMouseEnter(groupIndex, buttonIndex)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => handleClick(buttonIndex)}
-            >
-              {isHovered ? (
-                <ImgPico src={Pico.man_filled} alt="man filled" />
-              ) : (
-                <ImgPico src={Pico.man_empty} alt="man empty" />
-              )}
-            </DivPico>
+            <RenderGroups
+              key={`buttonIndex_${buttonIndex}`}
+              buttonIndex={buttonIndex}
+              groupIndex={groupIndex}
+              setGroup={setGroup}
+              data={data}
+            />
           );
         });
 
