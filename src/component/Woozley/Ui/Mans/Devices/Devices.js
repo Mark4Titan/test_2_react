@@ -1,33 +1,9 @@
-import { tableCloud } from "../../../Logic/Logic";
-import {
-  Stor_0001,
-  Stor_0010,
-  Stor_0100,
-  Stor_1000,
-} from "../../../Logic/Logic";
 import { Pico } from "../../Import.Img";
 import { ImgPico } from "../../Ui.styled";
 import { DevicesAnim, DivDevices, LatText } from "./Devices.styled";
 import { AnimStyles, itemStyles, positionStyles } from "./Seting/Seting.styles";
 import React, { useEffect, useState } from "react";
-
-const PatAnim = (Data, central) => {
-  const Cent = () => {
-    if (central === -1)
-      return [{ Lat: 0 }, { Lat: 0 }, { Lat: 0 }, { Lat: 0 }, { Lat: 0 }];
-    if (central === 0) return Stor_1000;
-    if (central === 1) return Stor_0100;
-    if (central === 2) return Stor_0010;
-    if (central === 3) return Stor_0001;
-  };
-  return [
-    { Cloud: tableCloud[Data], Obj: Cent()[Data] },
-    { Cloud: tableCloud[Data], Obj: Cent()[Data] },
-    { Cloud: tableCloud[Data], Obj: Cent()[Data] },
-    { Cloud: tableCloud[Data], Obj: Cent()[Data] },
-    { Cloud: tableCloud[Data], Obj: Cent()[Data] },
-  ];
-};
+import PatAnim from "./PatAnim/PatAnim";
 
 const Timer = (valTime, valDow) => {
   const [done, setDone] = useState(false);
@@ -43,6 +19,7 @@ const Timer = (valTime, valDow) => {
 };
 
 const Devices = ({ devices, Data, stages, central }) => {
+
   const Renders = () => {
     const Params = PatAnim(Data, central)[Data];
     return (

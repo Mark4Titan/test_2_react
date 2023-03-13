@@ -2,7 +2,6 @@ export const streaming = {
   Ultra: "4k/2160p Ultra HD",
   Full: "1080p Full HD",
   HD: "480p",
-  SD: "320p",
 };
 
 export const tableCloud = [

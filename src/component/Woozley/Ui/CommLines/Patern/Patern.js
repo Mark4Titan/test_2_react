@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { ImgPico } from "../../Ui.styled";
 import { DivBoxImg, DivComm } from "../CommLines.stiled";
 import CONSTMAP from "./CONSTMAP";
+import { getServer} from "../../../../../redux/services/GroupSlice";
 
 
  const RenderPriv = (Line, dev) => {
@@ -33,8 +35,10 @@ import CONSTMAP from "./CONSTMAP";
   };
 
 
-const RenderLine = (DEV, SER, CEN, looking) => {
-  const res = SER.map(String).reduce((a, b) => a + b);
+const RenderLine = (DEV, CEN, looking) => {
+  const { server } = useSelector(getServer);
+
+  const res = server.map(String).reduce((a, b) => a + b);
   const result = looking ? `SE_${res}` : `CSE_${createResultCentral(CEN)}`;
 
   const MAPSERVER = CONSTMAP(DEV);

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getServer, setStagesActions } from "../../../../redux/services/GroupSlice";
 import { Pico } from "../Import.Img";
 import { ImgPico } from "../Ui.styled";
 import { DivServer } from "./Server.styled";
@@ -14,8 +16,15 @@ const groupStyles = [
   { top: 560, left: 961 },
 ];
 
-const Server = ({ server, setServer, data, central, stages }) => {
+const Server = ({ Server, setServer, data, central, stages }) => {
+  const dispatch = useDispatch();
+    const { server } = useSelector(getServer);
   const [hoveredServer, setHoveredServer] = useState(false);
+
+    useEffect(() => {
+      const Bul = server.every((value) => value > 0);
+      Bul && dispatch(setStagesActions(2));
+    }, [dispatch, server]);
 
   const handleMouseLeave = () => {
     setHoveredServer(false);
@@ -41,16 +50,16 @@ const Server = ({ server, setServer, data, central, stages }) => {
 
   return (
     <>
-      {(stages < 2 || server > 0) && (
+      {(stages < 2 || Server > 0) && (
         <DivServer
           key={data}
           TopLeft={groupStyles[data]}
-          WidthHeight={itemStyles[server]}
+          WidthHeight={itemStyles[Server]}
           onClick={() => handleClick(data)}
           onMouseLeave={handleMouseLeave}
           onMouseEnter={handleMouseEnter}
         >
-          {server === 0 ? (
+          {Server === 0 ? (
             <>
               {!hoveredServer ? (
                 <ImgPico src={Pico.circle_empty} alt="circle empty" />

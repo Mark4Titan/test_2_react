@@ -76,7 +76,7 @@ const Ui = () => {
         server.map((_, indexSer) => (
           <Server
             key={indexSer}
-            server={server[indexSer]}
+            Server={server[indexSer]}
             setServer={setServer}
             data={indexSer}
             stages={stages}
@@ -84,7 +84,7 @@ const Ui = () => {
           />
         ))}
 
-      {stages >= 1 && (
+      {stages >= 2 && (
         <CommLines
           server={server}
           devices={group}
@@ -93,7 +93,9 @@ const Ui = () => {
           stages={stages}
         />
       )}
-      {stages === 6 && <Modal/>}
+      {stages === 6 && (
+        <Modal server={server} devices={group} central={central} />
+      )}
     </>
   );
 };

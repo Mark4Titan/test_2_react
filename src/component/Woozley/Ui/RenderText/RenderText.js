@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGroup,
@@ -13,16 +12,6 @@ const RendersText = ({ stages, central }) => {
   const dispatch = useDispatch();
   const { group } = useSelector(getGroup);
   const { server } = useSelector(getServer);
-
-  useEffect(() => {
-    const Bul = server.every((value) => value > 0);
-    Bul && dispatch(setStagesActions(2));
-  }, [dispatch, server]);
-
-  useEffect(() => {
-    const Bul = group.every((value) => value > -1);
-    Bul && dispatch(setStagesActions(1));
-  }, [dispatch, group]);
 
   const SummGr = () => {
     return group.reduce((total, value) => total + value, 0);

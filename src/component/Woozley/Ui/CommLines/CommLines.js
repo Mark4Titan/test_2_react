@@ -1,44 +1,34 @@
-import {  DivBoxImg, DivLines } from "./CommLines.stiled";
-import React, { useEffect } from "react";
+import { useState } from "react";
+import { DivBoxImg, DivLines } from "./CommLines.stiled";
+
 import RenderLine from "./Patern/Patern";
 
+  const Manager = (stagesApdata) => {
+    stagesApdata(3);
 
-const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
+    setTimeout(() => {
+      stagesApdata(4);
+    }, 5000);
 
-  const Manager = () => {
-    useEffect(() => {
-      stagesApdata(3);
+    // setTimeout(() => {
+    //   stagesApdata(5);
+    // }, 8000);
 
-      setTimeout(() => {
-        stagesApdata(4);
-      }, 5000);
+    setTimeout(() => {
+      stagesApdata(6);
+    }, 10000);
+};
+  
 
-      // setTimeout(() => {
-      //   stagesApdata(5);
-      // }, 8000);
-
-      setTimeout(() => {
-        stagesApdata(6);
-      }, 10000);
-    }, []);
-  };
-
+const CommLines = ({ devices, central, stages, stagesApdata }) => {
 
   return (
     <DivLines>
-      {stages === 2 && Manager()}
-      {stages === 3 && (
-        <>
-          <DivBoxImg key="Line_01">
-            {RenderLine(devices, server, central, true)}
-          </DivBoxImg>
-        </>
-      )}
-      {stages >= 4 && (
-        <DivBoxImg key="Line_02)">
-          {RenderLine(devices, server, central, false)}
-        </DivBoxImg>
-      )}
+      {stages === 2 && Manager(stagesApdata)}
+      <DivBoxImg key="Line_01">
+        {stages === 3 && RenderLine(devices, central, true)}
+        {stages >= 4 && RenderLine(devices, central, false)}
+      </DivBoxImg>
     </DivLines>
   );
 };
