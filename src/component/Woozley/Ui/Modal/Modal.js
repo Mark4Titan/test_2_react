@@ -87,7 +87,7 @@ const Modal = () => {
           <Data>
             <Content>
               latency <br />
-              <div>{mas.Lat} sec</div>
+              <div>{mas.Lat}</div>
             </Content>
             <Time>
               Download time <br />

@@ -7,8 +7,8 @@ export const streaming = {
 export const tableCloud = [
   {
     title: "North America",
-    Lat: 59,
-    Dow: 28,
+    Lat: 23,
+    Dow: 9,
   },
   {
     title: "South America",

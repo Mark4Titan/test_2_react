@@ -7,11 +7,7 @@ import RenderLine from "./Patern/Patern";
 
     setTimeout(() => {
       stagesApdata(4);
-    }, 5000);
-
-    // setTimeout(() => {
-    //   stagesApdata(5);
-    // }, 8000);
+    }, 5000); 
 
     setTimeout(() => {
       stagesApdata(6);

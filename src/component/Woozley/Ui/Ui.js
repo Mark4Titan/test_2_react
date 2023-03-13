@@ -24,7 +24,7 @@ import RendersText from "./RenderText/RenderText";
 import Server from "./Server/Server";
 import { BoxUi, DivRegion } from "./Ui.styled";
 
-const Ui = ({ isChecked, isWater, handleCheckboxChange, handleWater }) => {
+const Ui = ({  isWater, handleWater }) => {
   const dispatch = useDispatch();
   const { group } = useSelector(getGroup);
   const { server } = useSelector(getServer);
@@ -94,10 +94,8 @@ const Ui = ({ isChecked, isWater, handleCheckboxChange, handleWater }) => {
       <DivRegion>
         <RendersText stages={stages} central={central} />
       </DivRegion>
-      <Checkbox
-        isChecked={isChecked}
-        isWater={isWater}
-        handleCheckboxChange={handleCheckboxChange}
+      <Checkbox       
+        isWater={isWater}       
         handleWater={handleWater}
       />
       {group.map((_, indexGr) => renderMans(indexGr))}

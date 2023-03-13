@@ -1,27 +1,14 @@
 import { DivCheck } from "./Checkbox.styled";
 
-const Checkbox =({isChecked,
-isWater,
-handleCheckboxChange,
-handleWater})=> {
-  
-
+const Checkbox = ({ isWater, handleWater }) => {
   return (
     <DivCheck>
       <label>
         <input type="checkbox" checked={isWater} onChange={handleWater} />
         the water is blue
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
-        Demo
-      </label>
+      </label>      
     </DivCheck>
   );
-}
+};
 
 export default Checkbox;
