@@ -24,7 +24,7 @@ export const ShipBg = styled.div`
   bottom: 70px;
   left: 500px;
 
-  animation: ship-animation 20s linear infinite;
+  animation: ship-animation 20s linear infinite 10s;
 
   @keyframes ship-animation {
     0% {
@@ -34,6 +34,10 @@ export const ShipBg = styled.div`
     50% {
       left: 600px;
       bottom: 80px;
+    }
+    70% {
+      left: 600px;
+      bottom: 70px;
     }
     100% {
       left: 500px;
