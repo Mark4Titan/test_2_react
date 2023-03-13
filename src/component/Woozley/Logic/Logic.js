@@ -40,7 +40,7 @@ export const Stor_0010 = [
   },
   {
     title: "South America",
-    Lat: 314,
+    Lat: 214,
     Dow: 92,
   },
 

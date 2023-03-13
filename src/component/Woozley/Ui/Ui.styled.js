@@ -48,7 +48,11 @@ export const DivRegion = styled.div`
   top: 120px;
   height: 44px;
   font-size: 24px;
-  margin-left: 76px;
+  margin-left: 30px;
+`;
+export const BoxUi = styled.div`
+  position: absolute;
+  max-width: 1200px;
 `;
 
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { DivBoxImg, DivLines } from "./CommLines.stiled";
 
 import RenderLine from "./Patern/Patern";
