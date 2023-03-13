@@ -10,10 +10,10 @@ const groupStyles = [
   { top: 608, left: 950 },
 ];
 
-function Mans({ setGroup, Group, data }) {
+function Mans({ setGroup, Group, data, stages, central }) {
   const groups = Array(1)
     .fill()
-    .map((_, groupIndex) => {
+    .map(() => {
       const buttons = Array(3)
         .fill()
         .map((_, buttonIndex) => {
@@ -21,16 +21,24 @@ function Mans({ setGroup, Group, data }) {
             <RenderGroups
               key={`buttonIndex_${buttonIndex}`}
               buttonIndex={buttonIndex}
-              groupIndex={groupIndex}
+              groupIndex={data}
               setGroup={setGroup}
-              data={data}
             />
           );
         });
 
       return (
         <Divgroup key={data} TopLeft={groupStyles[data]}>
-          {Group > -1 ? <Devices devices={Group} Data={data} /> : buttons}
+          {Group > -1 ? (
+            <Devices
+              devices={Group}
+              Data={data}
+              stages={stages}
+              central={central}
+            />
+          ) : (
+            buttons
+          )}
         </Divgroup>
       );
     });

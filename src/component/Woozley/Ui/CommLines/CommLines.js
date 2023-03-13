@@ -4,18 +4,18 @@ import RenderLine from "./Patern/Patern";
 
 
 const CommLines = ({ server, devices, central, stages, stagesApdata }) => {
-  
+
   const Manager = () => {
     useEffect(() => {
       stagesApdata(3);
 
       setTimeout(() => {
         stagesApdata(4);
-      }, 4000);
+      }, 5000);
 
-      setTimeout(() => {
-        stagesApdata(5);
-      }, 8000);
+      // setTimeout(() => {
+      //   stagesApdata(5);
+      // }, 8000);
 
       setTimeout(() => {
         stagesApdata(6);

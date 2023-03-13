@@ -9,22 +9,24 @@ const itemStyles = [
 ];
 
 
-const RenderGroups = ({ buttonIndex, groupIndex, setGroup, data }) => {
+const RenderGroups = ({ buttonIndex, groupIndex, setGroup }) => {
   const [hoveredGroup, setHoveredGroup] = useState(null);
   const isHovered =
     hoveredGroup?.groupIndex === groupIndex &&
-    hoveredGroup.buttonIndex >= buttonIndex;
+    hoveredGroup?.buttonIndex >= buttonIndex;
+  
+  console.log(hoveredGroup?.buttonIndex);
 
-  const handleMouseEnter = (groupIndex, buttonIndex) => {
-    setHoveredGroup({ groupIndex, buttonIndex });
-  };
+    const handleMouseEnter = (gI, bI) => {      
+      setHoveredGroup({ groupIndex: gI, buttonIndex: bI });
+    };
 
   const handleMouseLeave = () => {
     setHoveredGroup(null);
   };
 
-  const handleClick = (buttonIndex) => {
-    setGroup(data, buttonIndex);
+  const handleClick = (gI, but) => {
+    setGroup(gI, but);
     setHoveredGroup(null);
   };
 
@@ -34,7 +36,7 @@ const RenderGroups = ({ buttonIndex, groupIndex, setGroup, data }) => {
       key={buttonIndex}
       onMouseEnter={() => handleMouseEnter(groupIndex, buttonIndex)}
       onMouseLeave={handleMouseLeave}
-      onClick={() => handleClick(buttonIndex)}
+      onClick={() => handleClick(groupIndex, buttonIndex)}
     >
       {isHovered ? (
         <ImgPico src={Pico.man_filled} alt="man filled" />

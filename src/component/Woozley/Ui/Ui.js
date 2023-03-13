@@ -51,7 +51,14 @@ const Ui = () => {
     const mansGroup = group[data];
     if (stages === 0 || mansGroup > -1) {
       return (
-        <Mans key={data} setGroup={setGroup} Group={mansGroup} data={data} />
+        <Mans
+          key={data}
+          setGroup={setGroup}
+          Group={mansGroup}
+          data={data}
+          stages={stages}
+          central={central}
+        />
       );
     }
     return null;
