@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGroup,
@@ -11,29 +11,40 @@ import {
   setAllDefaultActions,
   setStagesActions,
 } from "../../../redux/services/GroupSlice";
+import {
+  setTotalCloudActions,
+  setTotalDefault,
+} from "../../../redux/services/TotalSlice";
+import Checkbox from "./Checkbox/Checkbox";
 import CommLines from "./CommLines/CommLines";
+import PatAnim from "./Mans/Devices/PatAnim/PatAnim";
 import Mans from "./Mans/Mans";
 import Modal from "./Modal/Modal";
 import RendersText from "./RenderText/RenderText";
 import Server from "./Server/Server";
-import { DivRegion } from "./Ui.styled";
+import { BoxUi, DivRegion } from "./Ui.styled";
 
-const Ui = () => {
+const Ui = ({  isWater, handleWater }) => {
   const dispatch = useDispatch();
   const { group } = useSelector(getGroup);
   const { server } = useSelector(getServer);
   const { central } = useSelector(getCentral);
   const { stages } = useSelector(getStages);
+  const [first, setfirst] = useState(false);
 
   useEffect(() => {
     dispatch(setAllDefaultActions());
+    dispatch(setTotalDefault());
   }, [dispatch]);
+
+  useEffect(() => {
+    central === -1 && setfirst(false);
+  }, [central, dispatch]);
 
   const stagesApdata = (data) => {
     dispatch(setStagesActions(data));
   };
 
- 
   const setGroup = (valueGroup, buttIndex) => {
     const nevGroup = [...group];
     nevGroup[valueGroup] = buttIndex;
@@ -64,12 +75,29 @@ const Ui = () => {
     return null;
   };
 
+  const ItemTotal = () => {
+    dispatch(
+      setTotalCloudActions(
+        group.reduce((acc, _, indexSer) => {
+          if (group[indexSer] !== -1) {
+            acc.push(PatAnim(indexSer, central)[group[indexSer]]);
+          }
+          return acc;
+        }, [])
+      )
+    );
+    setfirst(true);
+  };
 
   return (
-    <>
+    <BoxUi>
       <DivRegion>
         <RendersText stages={stages} central={central} />
       </DivRegion>
+      <Checkbox       
+        isWater={isWater}       
+        handleWater={handleWater}
+      />
       {group.map((_, indexGr) => renderMans(indexGr))}
 
       {stages !== 0 &&
@@ -81,8 +109,10 @@ const Ui = () => {
             data={indexSer}
             stages={stages}
             central={central}
+            ItemTotal={ItemTotal}
           />
         ))}
+      {central !== -1 && stages === 4 && !first && ItemTotal()}
 
       {stages >= 2 && (
         <CommLines
@@ -93,10 +123,8 @@ const Ui = () => {
           stages={stages}
         />
       )}
-      {stages === 6 && (
-        <Modal server={server} devices={group} central={central} />
-      )}
-    </>
+      {stages === 6 && <Modal />}
+    </BoxUi>
   );
 };
 export default Ui;

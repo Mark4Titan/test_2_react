@@ -6,11 +6,11 @@ import Devices from "./Devices/Devices";
 import RenderGroups from "./RenderGroups/RenderGroups";
 
 const groupStyles = [
-  { top: 365, left: 209 },
-  { top: 568, left: 339 },
-  { top: 346, left: 586 },
-  { top: 427, left: 853 },
-  { top: 608, left: 950 },
+  { top: 365, left: 159 },
+  { top: 568, left: 289 },
+  { top: 346, left: 536 },
+  { top: 427, left: 803 },
+  { top: 608, left: 900 },
 ];
 
 function Mans({ setGroup, Group, data, stages, central }) {

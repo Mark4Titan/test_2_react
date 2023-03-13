@@ -1,18 +1,22 @@
-import { DivBg, ImgBg } from "./bg.styled";
+import { DivBg, ImgBg, ShipBg } from "./bg.styled";
 import BG_Img from "../img/Elements_Old/map_old.png";
+import BG_png from "../img/Elements_Old/map.png";
+import ship from "../img/Elements_Old/ship.png";
 
-const BG = () => {
+const BG = ({  isWater }) => {
   return (
     <DivBg margin_top={100} padding="20px" width="1200">
-      <ImgBg src={BG_Img} alt="BG" />
-      {/* <video
-            loop
-            muted
-            autoplay="autoplay"
-            poster="./component/img/map.png"
-            src="./component/mp4/map.mp4"
-            type="video/mp4"
-          ></video> */}
+          {!isWater ? (
+          <ImgBg src={BG_Img} alt="BG" />
+        ) : (
+          <div>
+            <ImgBg src={BG_png} alt="BG" />
+            <ShipBg>
+              <ImgBg src={ship} alt="ship" />
+            </ShipBg>
+          </div>
+        )
+      }
     </DivBg>
   );
 };

@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 
 export const DivModal = styled.div`
-  position: fixed;
+  position: absolute;;
   z-index: 10;
   width: 1245px;
   height: 725px;
   top: 98px;
-  left: 48px;
+  left: -2px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
@@ -24,7 +24,7 @@ export const DivCard = styled.div`
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-gap: 20px;
+  grid-gap: 10px;
 `;
 export const DivTextBox = styled.div`
   display: grid;
@@ -37,13 +37,13 @@ export const Title = styled.div`
   grid-template-columns: 1fr 1fr;
   font-weight: 700;
   border: solid 1px;
-  padding: 10px;
+  padding: 3px;
   justify-items: end;
   grid-gap: 50px;
 `;
 export const Data = styled.div`
   display: grid;
-  grid-template: 1fr / 90px 170px 200px;
+  grid-template: 1fr / 100px 170px 200px;
   border: solid 1px;
 `;
 export const Content = styled.div`

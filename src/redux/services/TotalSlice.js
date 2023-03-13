@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  totalCloud: [{ id: 9 }],
+  totalCloud: [],
   // totalStorage: [],
 };
 
@@ -16,7 +16,7 @@ export const TotalSlice = createSlice({
     //   state.totalStorage = action.payload;
     // },
     setTotalDefault: (state) => {
-      state.totalCloud = [{id: 9}];
+      state.totalCloud = [];
       // state.totalStorage = [];
     },
   },

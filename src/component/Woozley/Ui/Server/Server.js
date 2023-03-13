@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getServer, setStagesActions } from "../../../../redux/services/GroupSlice";
+import {
+  getServer,
+  setStagesActions,
+} from "../../../../redux/services/GroupSlice";
 import { Pico } from "../Import.Img";
 import { ImgPico } from "../Ui.styled";
 import { DivServer } from "./Server.styled";
@@ -10,21 +13,21 @@ const itemStyles = [
   { height: 60, width: 58 },
 ];
 const groupStyles = [
-  { top: 398, left: 210 },
-  { top: 375, left: 395 },
-  { top: 374, left: 632 },
-  { top: 560, left: 961 },
+  { top: 398, left: 160 },
+  { top: 375, left: 345 },
+  { top: 374, left: 585 },
+  { top: 560, left: 909 },
 ];
 
-const Server = ({ Server, setServer, data, central, stages }) => {
+const Server = ({ Server, setServer, data, central, stages, ItemTotal }) => {
   const dispatch = useDispatch();
-    const { server } = useSelector(getServer);
+  const { server } = useSelector(getServer);
   const [hoveredServer, setHoveredServer] = useState(false);
 
-    useEffect(() => {
-      const Bul = server.every((value) => value > 0);
-      Bul && dispatch(setStagesActions(2));
-    }, [dispatch, server]);
+  useEffect(() => {
+    const Bul = server.every((value) => value > 0);
+    Bul && dispatch(setStagesActions(2));
+  }, [dispatch, server]);
 
   const handleMouseLeave = () => {
     setHoveredServer(false);
@@ -38,15 +41,14 @@ const Server = ({ Server, setServer, data, central, stages }) => {
     setServer(indexServer);
   };
 
-  const serverRender = (data) => {
+  const serverRender = (data) => {   
+
     return central === data ? (
       <ImgPico src={Pico.server} alt="server" />
     ) : (
       <ImgPico src={Pico.server_ByteCloud} alt="server ByteCloud" />
     );
   };
-
-  
 
   return (
     <>
