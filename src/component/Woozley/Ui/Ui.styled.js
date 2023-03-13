@@ -51,27 +51,4 @@ export const DivRegion = styled.div`
   margin-left: 76px;
 `;
 
-export const DivModal = styled.div`
-  position: fixed;
-  z-index: 10;
-  width: 1245px;
-  height: 725px;
-  top: 98px;
-  left: 48px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  align-items: center;
 
-  background: rgba(255, 255, 255, 0.17);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5.3px);
-  -webkit-backdrop-filter: blur(5.3px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-`;
-export const DivTextBox = styled.div`
-  display: flex;
-  grid-template: 1fr 1fr / 1fr 1fr 1fr;
-  border: solid 1px;
-`;

@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { GroupSlice } from "./services/GroupSlice";
+import { TotalSlice } from "./services/TotalSlice";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
 import {
@@ -23,6 +24,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [GroupSlice.name]: GroupSlice.reducer,
+  [TotalSlice.name]: TotalSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

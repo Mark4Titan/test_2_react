@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Pico } from "../../Import.Img";
 import { DivPico, ImgPico } from "../../Ui.styled";
 
@@ -8,35 +7,36 @@ const itemStyles = [
   { margin_top: 0, height: 70 },
 ];
 
+const RenderGroups = ({
+  buttonIndex,
+  groupIndex,
+  setGroup,
+  sethoverButton,
+  bHover,
+}) => {
 
-const RenderGroups = ({ buttonIndex, groupIndex, setGroup, data }) => {
-  const [hoveredGroup, setHoveredGroup] = useState(null);
-  const isHovered =
-    hoveredGroup?.groupIndex === groupIndex &&
-    hoveredGroup.buttonIndex >= buttonIndex;
-
-  const handleMouseEnter = (groupIndex, buttonIndex) => {
-    setHoveredGroup({ groupIndex, buttonIndex });
+  const handleMouseEnter = (bI) => {
+    sethoverButton(bI);
   };
 
   const handleMouseLeave = () => {
-    setHoveredGroup(null);
+    sethoverButton(-1);
   };
 
-  const handleClick = (buttonIndex) => {
-    setGroup(data, buttonIndex);
-    setHoveredGroup(null);
+  const handleClick = (gI, but) => {
+    setGroup(gI, but);
+    sethoverButton(-1);
   };
 
   return (
     <DivPico
       TopLeft={itemStyles[buttonIndex]}
       key={buttonIndex}
-      onMouseEnter={() => handleMouseEnter(groupIndex, buttonIndex)}
+      onMouseEnter={() => handleMouseEnter(buttonIndex)}
       onMouseLeave={handleMouseLeave}
-      onClick={() => handleClick(buttonIndex)}
+      onClick={() => handleClick(groupIndex, buttonIndex)}
     >
-      {isHovered ? (
+      {bHover[buttonIndex] ? (
         <ImgPico src={Pico.man_filled} alt="man filled" />
       ) : (
         <ImgPico src={Pico.man_empty} alt="man empty" />
@@ -44,4 +44,4 @@ const RenderGroups = ({ buttonIndex, groupIndex, setGroup, data }) => {
     </DivPico>
   );
 };
-export default RenderGroups
+export default RenderGroups;
