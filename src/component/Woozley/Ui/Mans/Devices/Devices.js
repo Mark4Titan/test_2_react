@@ -88,9 +88,7 @@ const Devices = ({ devices, Data, stages, central }) => {
   };
 
   return (
-    <>
       <Renders key={devices} />
-    </>
   );
 };
 

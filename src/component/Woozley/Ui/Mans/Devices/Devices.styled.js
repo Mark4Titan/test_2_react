@@ -31,6 +31,8 @@ export const DevicesAnim = styled.div`
 
 
 export const LatText = styled.div`
+  position: absolute;
+  top: -17px;
   background-color: #8a2be20f;
   color: #000;
   padding: 10px;
