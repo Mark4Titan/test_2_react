@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getGroup,
@@ -24,26 +24,48 @@ import RendersText from "./RenderText/RenderText";
 import Server from "./Server/Server";
 import { BoxUi, DivRegion } from "./Ui.styled";
 
-const Ui = ({  isWater, handleWater }) => {
+const Ui = ({ isWater, handleWater }) => {
   const dispatch = useDispatch();
   const { group } = useSelector(getGroup);
   const { server } = useSelector(getServer);
   const { central } = useSelector(getCentral);
   const { stages } = useSelector(getStages);
-  const [first, setfirst] = useState(false);
 
   useEffect(() => {
     dispatch(setAllDefaultActions());
     dispatch(setTotalDefault());
   }, [dispatch]);
 
-  useEffect(() => {
-    central === -1 && setfirst(false);
-  }, [central, dispatch]);
+  useEffect(() => {    
+    stages === 6 &&
+      dispatch(
+        setTotalCloudActions(
+          group.reduce((acc, _, indexSer) => {
+            if (group[indexSer] !== -1) {
+              acc.push(PatAnim(indexSer, central)[group[indexSer]]);
+            }
+            return acc;
+          }, [])
+        )
+      );
+  }, [central, dispatch, group, stages]);
 
-  const stagesApdata = (data) => {
-    dispatch(setStagesActions(data));
-  };
+
+  useEffect(() => {
+    if (stages === 2) {
+      dispatch(setStagesActions(3));
+
+      setTimeout(() => {
+        dispatch(setStagesActions(4));
+      }, 5000);
+
+      setTimeout(() => {
+        dispatch(setStagesActions(6));
+      }, 10000);
+    }
+  }, [dispatch, stages]);
+
+
 
   const setGroup = (valueGroup, buttIndex) => {
     const nevGroup = [...group];
@@ -58,7 +80,7 @@ const Ui = ({  isWater, handleWater }) => {
     dispatch(setCentralActions(valueServer));
   };
 
-  const renderMans = (data) => {
+  const renderGroupMans = (data) => {
     const mansGroup = group[data];
     if (stages === 0 || mansGroup > -1) {
       return (
@@ -75,30 +97,14 @@ const Ui = ({  isWater, handleWater }) => {
     return null;
   };
 
-  const ItemTotal = () => {
-    dispatch(
-      setTotalCloudActions(
-        group.reduce((acc, _, indexSer) => {
-          if (group[indexSer] !== -1) {
-            acc.push(PatAnim(indexSer, central)[group[indexSer]]);
-          }
-          return acc;
-        }, [])
-      )
-    );
-    setfirst(true);
-  };
 
   return (
     <BoxUi>
       <DivRegion>
         <RendersText stages={stages} central={central} />
       </DivRegion>
-      <Checkbox       
-        isWater={isWater}       
-        handleWater={handleWater}
-      />
-      {group.map((_, indexGr) => renderMans(indexGr))}
+      <Checkbox isWater={isWater} handleWater={handleWater} />
+      {group.map((_, indexGr) => renderGroupMans(indexGr))}
 
       {stages !== 0 &&
         server.map((_, indexSer) => (
@@ -109,17 +115,14 @@ const Ui = ({  isWater, handleWater }) => {
             data={indexSer}
             stages={stages}
             central={central}
-            ItemTotal={ItemTotal}
           />
         ))}
-      {central !== -1 && stages === 4 && !first && ItemTotal()}
 
       {stages >= 2 && (
         <CommLines
           server={server}
           devices={group}
           central={central}
-          stagesApdata={stagesApdata}
           stages={stages}
         />
       )}

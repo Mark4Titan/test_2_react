@@ -14,12 +14,12 @@ const itemStyles = [
 ];
 const groupStyles = [
   { top: 398, left: 160 },
-  { top: 375, left: 345 },
+  { top: 375, left: 355 },
   { top: 374, left: 585 },
   { top: 560, left: 909 },
 ];
 
-const Server = ({ Server, setServer, data, central, stages, ItemTotal }) => {
+const Server = ({ Server, setServer, data, central, stages }) => {
   const dispatch = useDispatch();
   const { server } = useSelector(getServer);
   const [hoveredServer, setHoveredServer] = useState(false);

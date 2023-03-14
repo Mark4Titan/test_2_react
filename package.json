@@ -1,7 +1,8 @@
 {
-  "name": "test_2_react",
+  "name": "test_2",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Mark4Titan.github.io/test_2/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
