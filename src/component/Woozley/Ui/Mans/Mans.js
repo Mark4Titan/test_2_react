@@ -6,7 +6,7 @@ import Devices from "./Devices/Devices";
 import RenderGroups from "./RenderGroups/RenderGroups";
 
 const groupStyles = [
-  { top: 365, left: 159 },
+  { top: 376, left: 165 },
   { top: 568, left: 289 },
   { top: 346, left: 536 },
   { top: 427, left: 803 },

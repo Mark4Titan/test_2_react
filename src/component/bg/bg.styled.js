@@ -24,7 +24,7 @@ export const ShipBg = styled.div`
   bottom: 70px;
   left: 500px;
 
-  animation: ship-animation 20s linear infinite 10s;
+  animation: ship-animation 20s linear infinite 7s;
 
   @keyframes ship-animation {
     0% {

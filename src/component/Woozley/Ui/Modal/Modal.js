@@ -73,13 +73,11 @@ const Modal = () => {
 
 
 
-  const Consrtuct = (mas) => {
-
+  const Consrtuct = (mas, ind, KEY) => {
 
     const val = getStreamingQuality(mas.Dow);
     return (
-      <>
-        <DivTextBox>
+        <DivTextBox key={`${KEY}_${ind}_${mas.Lat}`}>
           <Title>
             <div>{mas.title}</div>
             {StarRating(val.stars)}
@@ -99,20 +97,19 @@ const Modal = () => {
             </Content>
           </Data>
         </DivTextBox>
-      </>
     );
    
   };
 
   return (
-    <DivModal key="text">
+    <DivModal>
       <DivCard>
         <TextH2>ByteCloud</TextH2>
-        {totalCloud.map((i) => Consrtuct(i.Cloud))}
+        {totalCloud.map((i, ind) => Consrtuct(i.Cloud, ind, "ByteCloud"))}
       </DivCard>
       <DivCard>
         <TextH2>Object Storage</TextH2>
-        {totalCloud.map((i) => Consrtuct(i.Obj))}
+        {totalCloud.map((i, ind) => Consrtuct(i.Obj, ind, "Object_Storage"))}
       </DivCard>
     </DivModal>
   );
